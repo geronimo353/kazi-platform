@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inscription Entreprise — Kazi</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config={darkMode:'class',theme:{extend:{fontFamily:{sans:['Inter','sans-serif']}}}}</script>
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="dark" style="min-height:100vh;">
+<div x-data="pmeApp()" style="min-height:100vh;background:var(--bg);">
+
+<!-- TOP BAR -->
+<div style="padding:18px 40px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);background:var(--surface);">
+  <a href="index.html" style="display:flex;align-items:center;gap:10px;font-size:18px;font-weight:800;">
+    <div style="width:30px;height:30px;background:var(--gradient);border-radius:8px;display:flex;align-items:center;justify-content:center;"><svg width="15" height="15" fill="none" stroke="#fff" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div>
+    <span class="gradient-text">KAZI</span>
+  </a>
+  <span style="color:var(--text-muted);font-size:14px;">Vous êtes diplômé ? <a href="inscription-diplome.html" style="color:var(--primary-l);font-weight:500;">Créer un profil candidat</a></span>
+</div>
+
+<!-- MAIN GRID -->
+<div style="display:grid;grid-template-columns:1fr 1fr;min-height:calc(100vh - 65px);">
+
+  <!-- LEFT PANEL -->
+  <div class="hidden md:flex" style="background:linear-gradient(135deg,rgba(16,185,129,.12) 0%,rgba(59,130,246,.08) 100%);border-right:1px solid var(--border);padding:60px 48px;flex-direction:column;justify-content:center;position:sticky;top:65px;height:calc(100vh - 65px);">
+    <div class="badge badge-success" style="margin-bottom:24px;width:fit-content;">Pour les entreprises</div>
+    <h2 style="font-size:34px;font-weight:800;line-height:1.1;margin-bottom:16px;">Recrutez avec<br><span class="gradient-text-g">confiance totale.</span></h2>
+    <p style="color:var(--text-muted);font-size:15px;line-height:1.7;margin-bottom:36px;">Fini les faux CV. Kazi vérifie l'identité de votre entreprise et vous donne accès à des candidats dont les compétences sont prouvées par notre algorithme.</p>
+    <div class="alert alert-info" style="margin-bottom:24px;">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="flex-shrink:0;margin-top:1px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <span>Votre compte sera activé après vérification de vos documents légaux. Délai : <strong>24-48h ouvrées.</strong></span>
+    </div>
+    <!-- Trust indicators -->
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div style="display:flex;align-items:center;gap:12px;font-size:14px;color:var(--text-muted);">
+        <svg width="16" height="16" fill="none" stroke="#10b981" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        Vérification RCCM, ID NAT &amp; NIF par notre équipe
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;font-size:14px;color:var(--text-muted);">
+        <svg width="16" height="16" fill="none" stroke="#10b981" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        Badge bleu "Entreprise Vérifiée" après validation
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;font-size:14px;color:var(--text-muted);">
+        <svg width="16" height="16" fill="none" stroke="#10b981" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        Accès immédiat à la recherche de candidats (lecture seule)
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;font-size:14px;color:var(--text-muted);">
+        <svg width="16" height="16" fill="none" stroke="#10b981" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        Données sécurisées et confidentielles
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div style="padding:48px 40px;overflow-y:auto;">
+    <div style="max-width:480px;margin:0 auto;">
+
+      <!-- STEP INDICATOR -->
+      <div x-show="step < 5" style="margin-bottom:36px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+          <h1 style="font-size:22px;font-weight:800;" x-text="steps[step-1].title"></h1>
+          <span style="font-size:13px;color:var(--text-muted);" x-text="step + ' / 4'"></span>
+        </div>
+        <div class="step-bar">
+          <template x-for="(s, i) in steps.slice(0,4)" :key="i">
+            <div class="step-item">
+              <div class="step-circle" :class="{'active': step===i+1,'done': step>i+1}">
+                <template x-if="step>i+1"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></template>
+                <template x-if="step<=i+1"><span x-text="i+1"></span></template>
+              </div>
+              <div class="step-line" :class="{'done':step>i+1}" x-show="i<3"></div>
+            </div>
+          </template>
+        </div>
+        <div style="margin-top:10px;font-size:13px;color:var(--text-muted);" x-text="steps[step-1].subtitle"></div>
+      </div>
+
+      <!-- ══ STEP 1 : Infos entreprise ══ -->
+      <div x-show="step===1" x-transition:enter="fade-up">
+        <div style="margin-bottom:20px;">
+          <label class="input-label" style="margin-bottom:8px;">Logo de l'entreprise</label>
+          <div class="upload-zone" id="logo-zone" onclick="document.getElementById('logo-input').click()">
+            <svg width="26" height="26" fill="none" stroke="var(--primary-l)" stroke-width="1.5" viewBox="0 0 24 24" style="margin-bottom:6px;"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            <div style="font-size:14px;font-weight:500;">Logo de votre entreprise</div>
+            <div style="font-size:12px;color:var(--text-muted);">PNG, JPG — max 2 Mo (optionnel)</div>
+          </div>
+          <input type="file" id="logo-input" accept="image/*" style="display:none" onchange="handleFile(this.files[0],'logo-zone',null)">
+        </div>
+        <div style="margin-bottom:14px;"><label class="input-label">Nom de l'entreprise *</label><input class="input" placeholder="Ex: Tech Solutions SARL" x-model="form.nomEntreprise"></div>
+        <div style="margin-bottom:14px;">
+          <label class="input-label">Secteur d'activité *</label>
+          <select class="input select" x-model="form.secteur">
+            <option value="">Sélectionner le secteur</option>
+            <option>Technologies &amp; Informatique</option><option>Commerce &amp; Distribution</option><option>Finance &amp; Banque</option><option>Éducation &amp; Formation</option><option>Santé</option><option>Construction &amp; BTP</option><option>Agriculture &amp; Agroalimentaire</option><option>Mines &amp; Énergie</option><option>Transports &amp; Logistique</option><option>Médias &amp; Communication</option><option>Conseil &amp; Services</option><option>Industrie &amp; Manufacture</option><option>ONG &amp; Associations</option><option>Autre</option>
+          </select>
+        </div>
+        <div style="margin-bottom:14px;"><label class="input-label">Adresse complète *</label><input class="input" placeholder="Numéro, Avenue, Quartier" x-model="form.adresse"></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
+          <div>
+            <label class="input-label">Province *</label>
+            <select class="input select" x-model="form.province">
+              <option value="">Province</option>
+              <option>Kinshasa</option><option>Kongo Central</option><option>Haut-Katanga</option><option>Lualaba</option><option>Nord-Kivu</option><option>Sud-Kivu</option><option>Maniema</option><option>Ituri</option><option>Kasaï-Oriental</option><option>Kasaï</option><option>Autre</option>
+            </select>
+          </div>
+          <div><label class="input-label">Ville *</label><input class="input" placeholder="Kinshasa" x-model="form.ville"></div>
+        </div>
+        <div style="margin-bottom:14px;"><label class="input-label">Téléphone professionnel *</label><input class="input" type="tel" placeholder="+243 8XX XXX XXX" x-model="form.telephone"></div>
+        <div style="margin-bottom:14px;"><label class="input-label">Email professionnel *</label><input class="input" type="email" placeholder="contact@monentreprise.cd" x-model="form.email"></div>
+        <div style="margin-bottom:14px;"><label class="input-label">Site web</label><input class="input" type="url" placeholder="https://www.monentreprise.cd" x-model="form.siteWeb"></div>
+        <div style="margin-bottom:28px;"><label class="input-label">Mot de passe *</label><input class="input" type="password" placeholder="••••••••" x-model="form.password"></div>
+        <button class="btn btn-gradient" style="width:100%;justify-content:center;padding:13px;" @click="next()">Continuer — Documents légaux →</button>
+      </div>
+
+      <!-- ══ STEP 2 : Documents légaux ══ -->
+      <div x-show="step===2" x-transition:enter="fade-up">
+        <div class="alert alert-warning" style="margin-bottom:24px;">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="flex-shrink:0;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <span>Ces documents permettent de <strong>vérifier la légalité de votre entreprise</strong>. Ils resteront strictement confidentiels et ne seront utilisés qu'à des fins de vérification.</span>
+        </div>
+
+        <!-- RCCM -->
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px;margin-bottom:16px;">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+            <div style="width:38px;height:38px;border-radius:10px;background:rgba(124,58,237,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="18" height="18" fill="none" stroke="#a78bfa" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+            </div>
+            <div>
+              <div style="font-weight:700;font-size:15px;">Registre de Commerce (RCCM)</div>
+              <div style="font-size:12px;color:var(--text-muted);">Numéro + copie PDF officielle</div>
+            </div>
+            <span class="badge badge-danger" style="margin-left:auto;">Obligatoire</span>
+          </div>
+          <div style="margin-bottom:12px;"><label class="input-label">Numéro RCCM *</label><input class="input" placeholder="CD/KIN/RCCM/2024/B/00XXX" x-model="form.rccmNum"></div>
+          <label class="input-label" style="margin-bottom:8px;">Document RCCM (PDF) *</label>
+          <div class="upload-zone" id="rccm-zone" onclick="document.getElementById('rccm-input').click()">
+            <svg width="24" height="24" fill="none" stroke="var(--primary-l)" stroke-width="1.5" viewBox="0 0 24 24" style="margin-bottom:6px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+            <div style="font-size:14px;font-weight:500;">Téléverser le PDF du RCCM</div>
+            <div style="font-size:12px;color:var(--text-muted);">PDF — max 5 Mo</div>
+          </div>
+          <input type="file" id="rccm-input" accept=".pdf" style="display:none" onchange="handleFile(this.files[0],'rccm-zone',null)">
+        </div>
+
+        <!-- ID NAT -->
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px;margin-bottom:16px;">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+            <div style="width:38px;height:38px;border-radius:10px;background:rgba(59,130,246,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="18" height="18" fill="none" stroke="#60a5fa" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+            </div>
+            <div>
+              <div style="font-weight:700;font-size:15px;">Identification Nationale (ID NAT)</div>
+              <div style="font-size:12px;color:var(--text-muted);">Numéro + copie PDF officielle</div>
+            </div>
+            <span class="badge badge-danger" style="margin-left:auto;">Obligatoire</span>
+          </div>
+          <div style="margin-bottom:12px;"><label class="input-label">Numéro ID NAT *</label><input class="input" placeholder="01-XXXX-NXXXXX" x-model="form.idnatNum"></div>
+          <label class="input-label" style="margin-bottom:8px;">Document ID NAT (PDF) *</label>
+          <div class="upload-zone" id="idnat-zone" onclick="document.getElementById('idnat-input').click()">
+            <svg width="24" height="24" fill="none" stroke="#60a5fa" stroke-width="1.5" viewBox="0 0 24 24" style="margin-bottom:6px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+            <div style="font-size:14px;font-weight:500;">Téléverser le PDF de l'ID NAT</div>
+            <div style="font-size:12px;color:var(--text-muted);">PDF — max 5 Mo</div>
+          </div>
+          <input type="file" id="idnat-input" accept=".pdf" style="display:none" onchange="handleFile(this.files[0],'idnat-zone',null)">
+        </div>
+
+        <!-- NIF / NUMÉRO IMPÔT -->
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px;margin-bottom:28px;">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+            <div style="width:38px;height:38px;border-radius:10px;background:rgba(245,158,11,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="18" height="18" fill="none" stroke="#fbbf24" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            </div>
+            <div>
+              <div style="font-weight:700;font-size:15px;">Numéro d'Impôt (NIF)</div>
+              <div style="font-size:12px;color:var(--text-muted);">Numéro fiscal + quittance PDF</div>
+            </div>
+            <span class="badge badge-danger" style="margin-left:auto;">Obligatoire</span>
+          </div>
+          <div style="margin-bottom:12px;"><label class="input-label">Numéro d'Impôt (NIF) *</label><input class="input" placeholder="AXXXXXXXXX" x-model="form.nifNum"></div>
+          <label class="input-label" style="margin-bottom:8px;">Quittance / Document NIF (PDF) *</label>
+          <div class="upload-zone" id="nif-zone" onclick="document.getElementById('nif-input').click()">
+            <svg width="24" height="24" fill="none" stroke="#fbbf24" stroke-width="1.5" viewBox="0 0 24 24" style="margin-bottom:6px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+            <div style="font-size:14px;font-weight:500;">Téléverser la quittance NIF</div>
+            <div style="font-size:12px;color:var(--text-muted);">PDF — max 5 Mo</div>
+          </div>
+          <input type="file" id="nif-input" accept=".pdf" style="display:none" onchange="handleFile(this.files[0],'nif-zone',null)">
+        </div>
+
+        <div style="display:flex;gap:12px;">
+          <button class="btn btn-outline" style="flex:1;justify-content:center;" @click="prev()">← Retour</button>
+          <button class="btn btn-gradient" style="flex:2;justify-content:center;" @click="next()">Continuer — Responsable RH →</button>
+        </div>
+      </div>
+
+      <!-- ══ STEP 3 : Responsable RH ══ -->
+      <div x-show="step===3" x-transition:enter="fade-up">
+        <p style="color:var(--text-muted);font-size:14px;margin-bottom:24px;line-height:1.6;">Renseignez les coordonnées du responsable RH qui gérera les recrutements sur la plateforme.</p>
+        <div style="margin-bottom:14px;"><label class="input-label">Nom complet du responsable *</label><input class="input" placeholder="Jean Mulamba" x-model="form.rhNom"></div>
+        <div style="margin-bottom:14px;"><label class="input-label">Titre / Poste *</label><input class="input" placeholder="Directeur RH, Chargé de recrutement..." x-model="form.rhTitre"></div>
+        <div style="margin-bottom:14px;"><label class="input-label">Email direct *</label><input class="input" type="email" placeholder="rh@monentreprise.cd" x-model="form.rhEmail"></div>
+        <div style="margin-bottom:28px;"><label class="input-label">Téléphone direct *</label><input class="input" type="tel" placeholder="+243 8XX XXX XXX" x-model="form.rhTel"></div>
+        <div style="background:rgba(16,185,129,.07);border:1px solid rgba(16,185,129,.2);border-radius:12px;padding:16px;margin-bottom:24px;display:flex;align-items:flex-start;gap:12px;">
+          <input type="checkbox" class="checkbox" style="margin-top:2px;" x-model="form.accepted">
+          <label style="font-size:13px;color:var(--text-muted);line-height:1.6;cursor:pointer;">J'atteste que les informations et documents fournis sont authentiques. Je comprends que toute falsification entraîne la suppression définitive du compte.</label>
+        </div>
+        <div style="display:flex;gap:12px;">
+          <button class="btn btn-outline" style="flex:1;justify-content:center;" @click="prev()">← Retour</button>
+          <button class="btn btn-gradient" style="flex:2;justify-content:center;" @click="submitPme()" :disabled="!form.accepted" :style="!form.accepted ? 'opacity:.5;cursor:not-allowed;':''">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            Soumettre la demande
+          </button>
+        </div>
+      </div>
+
+      <!-- ══ STEP 4 : SUCCÈS en attente ══ -->
+      <div x-show="step===5" x-transition:enter="fade-up" style="text-align:center;padding:40px 0;">
+        <div style="width:80px;height:80px;background:rgba(245,158,11,.12);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;">
+          <svg width="36" height="36" fill="none" stroke="#f59e0b" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <h2 style="font-size:24px;font-weight:800;margin-bottom:12px;">Demande soumise ! ✅</h2>
+        <div class="badge badge-pending" style="margin:0 auto 20px;width:fit-content;font-size:14px;padding:6px 16px;">
+          ⏳ En attente de vérification
+        </div>
+        <p style="color:var(--text-muted);font-size:14px;line-height:1.7;margin-bottom:8px;">Votre dossier est en cours d'examen par notre équipe.</p>
+        <p style="color:var(--text-muted);font-size:14px;line-height:1.7;margin-bottom:32px;">Vous recevrez un email de confirmation à <strong style="color:var(--text);" x-text="form.email"></strong> dans les <strong style="color:var(--text);">24-48h ouvrées</strong>.</p>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:24px;text-align:left;">
+          <div style="font-weight:600;margin-bottom:12px;font-size:14px;">Documents soumis :</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="display:flex;align-items:center;gap:10px;font-size:13px;"><svg width="14" height="14" fill="none" stroke="#10b981" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>RCCM — <span class="badge badge-success" style="font-size:11px;">Reçu</span></span></div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:13px;"><svg width="14" height="14" fill="none" stroke="#10b981" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>ID NAT — <span class="badge badge-success" style="font-size:11px;">Reçu</span></span></div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:13px;"><svg width="14" height="14" fill="none" stroke="#10b981" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Numéro d'Impôt (NIF) — <span class="badge badge-success" style="font-size:11px;">Reçu</span></span></div>
+          </div>
+        </div>
+        <a href="dashboard-pme.html" class="btn btn-gradient btn-lg" style="justify-content:center;width:100%;">Accéder à l'espace entreprise</a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="assets/js/app.js"></script>
+<script>
+function pmeApp() {
+  return {
+    step: 1,
+    steps: [
+      { title: "Infos de l'entreprise",  subtitle: "Nom, secteur, adresse et contact" },
+      { title: "Documents légaux",        subtitle: "RCCM, ID NAT et Numéro d'Impôt — obligatoires" },
+      { title: "Responsable RH",          subtitle: "Coordonnées de la personne qui recrute" },
+      { title: "Vérification en cours",   subtitle: "Délai 24-48h ouvrées" },
+    ],
+    form: {
+      nomEntreprise:'', secteur:'', adresse:'', province:'', ville:'', telephone:'', email:'', siteWeb:'', password:'',
+      rccmNum:'', idnatNum:'', nifNum:'',
+      rhNom:'', rhTitre:'', rhEmail:'', rhTel:'', accepted: false,
+    },
+    next() { if (this.step < 4) this.step++; },
+    prev() { if (this.step > 1) this.step--; },
+    submitPme() { this.step = 5; showToast('Dossier soumis avec succès !', 'success'); },
+  };
+}
+</script>
+</body>
+</html>
