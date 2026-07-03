@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inscription Diplômé — Kazi</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config={darkMode:'class',theme:{extend:{fontFamily:{sans:['Inter','sans-serif']}}}}</script>
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="dark" style="min-height:100vh;">
+<div x-data="inscriptionApp()" style="min-height:100vh;background:var(--bg);">
+
+<!-- TOP BAR -->
+<div style="padding:18px 40px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);background:var(--surface);">
+  <a href="index.html" style="display:flex;align-items:center;gap:10px;font-size:18px;font-weight:800;">
+    <div style="width:30px;height:30px;background:var(--gradient);border-radius:8px;display:flex;align-items:center;justify-content:center;"><svg width="15" height="15" fill="none" stroke="#fff" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div>
+    <span class="gradient-text">KAZI</span>
+  </a>
+  <span style="color:var(--text-muted);font-size:14px;">Déjà inscrit? <a href="dashboard-diplome.html" style="color:var(--primary-l);font-weight:500;">Se connecter</a></span>
+</div>
+
+<!-- MAIN -->
+<div style="display:grid;grid-template-columns:1fr 1fr;min-height:calc(100vh - 65px);">
+
+  <!-- LEFT PANEL (info) -->
+  <div class="hidden md:flex" style="background:linear-gradient(135deg,rgba(124,58,237,.15) 0%,rgba(59,130,246,.08) 100%);border-right:1px solid var(--border);padding:60px 48px;flex-direction:column;justify-content:center;position:sticky;top:65px;height:calc(100vh - 65px);">
+    <div class="badge badge-primary" style="margin-bottom:24px;width:fit-content;">Pour les diplômés</div>
+    <h2 style="font-size:36px;font-weight:800;line-height:1.1;margin-bottom:16px;">Prouve ta valeur.<br><span class="gradient-text">Décrooche le job.</span></h2>
+    <p style="color:var(--text-muted);font-size:15px;line-height:1.7;margin-bottom:36px;">Crée ton profil Kazi, passe les tests de compétences et obtiens ton Kazi Score™ — l'indicateur qui remplace le diplôme par une preuve réelle.</p>
+    <div style="display:flex;flex-direction:column;gap:16px;">
+      <div style="display:flex;align-items:center;gap:14px;padding:16px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:12px;">
+        <div style="width:40px;height:40px;border-radius:10px;background:rgba(124,58,237,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;">⭐</div>
+        <div><div style="font-weight:600;font-size:14px;">Kazi Score™</div><div style="color:var(--text-muted);font-size:13px;">Un score sur 100 qui prouve tes compétences réelles</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;padding:16px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:12px;">
+        <div style="width:40px;height:40px;border-radius:10px;background:rgba(16,185,129,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;">🏅</div>
+        <div><div style="font-weight:600;font-size:14px;">Badges vérifiés</div><div style="color:var(--text-muted);font-size:13px;">Bronze, Silver, Gold, Expert — selon tes résultats</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;padding:16px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:12px;">
+        <div style="width:40px;height:40px;border-radius:10px;background:rgba(59,130,246,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;">🔍</div>
+        <div><div style="font-weight:600;font-size:14px;">Visible des PMEs</div><div style="color:var(--text-muted);font-size:13px;">+320 entreprises vérifiées cherchent des profils comme toi</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL (form) -->
+  <div style="padding:48px 40px;overflow-y:auto;">
+    <div style="max-width:480px;margin:0 auto;">
+
+      <!-- STEP INDICATOR -->
+      <div x-show="step < 5" style="margin-bottom:36px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+          <h1 style="font-size:22px;font-weight:800;" x-text="steps[step-1].title"></h1>
+          <span style="font-size:13px;color:var(--text-muted);" x-text="step + ' / 4'"></span>
+        </div>
+        <div class="step-bar">
+          <template x-for="(s, i) in steps" :key="i">
+            <div class="step-item">
+              <div class="step-circle" :class="{'active': step === i+1, 'done': step > i+1}">
+                <template x-if="step > i+1"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></template>
+                <template x-if="step <= i+1"><span x-text="i+1"></span></template>
+              </div>
+              <div class="step-line" :class="{'done': step > i+1}" x-show="i < steps.length - 1"></div>
+            </div>
+          </template>
+        </div>
+        <div style="margin-top:10px;font-size:13px;color:var(--text-muted);" x-text="steps[step-1].subtitle"></div>
+      </div>
+
+      <!-- STEP 1: Infos personnelles -->
+      <div x-show="step === 1" x-transition:enter="fade-up">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
+          <div><label class="input-label">Prénom *</label><input class="input" type="text" placeholder="Jean-Pierre" x-model="form.prenom"></div>
+          <div><label class="input-label">Nom *</label><input class="input" type="text" placeholder="Kabongo" x-model="form.nom"></div>
+        </div>
+        <div style="margin-bottom:14px;"><label class="input-label">Postnom</label><input class="input" type="text" placeholder="Mwamba" x-model="form.postnom"></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
+          <div>
+            <label class="input-label">Sexe *</label>
+            <select class="input select" x-model="form.sexe">
+              <option value="">Sélectionner</option><option>Masculin</option><option>Féminin</option>
+            </select>
+          </div>
+          <div><label class="input-label">Date de naissance *</label><input class="input" type="date" x-model="form.dateNaissance"></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
+          <div>
+            <label class="input-label">Province *</label>
+            <select class="input select" x-model="form.province">
+              <option value="">Sélectionner</option>
+              <option>Kinshasa</option><option>Kongo Central</option><option>Kwango</option><option>Kwilu</option><option>Maï-Ndombe</option><option>Kasaï</option><option>Kasaï-Central</option><option>Kasaï-Oriental</option><option>Lomami</option><option>Sankuru</option><option>Maniema</option><option>Sud-Kivu</option><option>Nord-Kivu</option><option>Ituri</option><option>Haut-Uélé</option><option>Tshopo</option><option>Bas-Uélé</option><option>Nord-Ubangi</option><option>Mongala</option><option>Sud-Ubangi</option><option>Équateur</option><option>Tshuapa</option><option>Haut-Katanga</option><option>Lualaba</option><option>Haut-Lomami</option><option>Tanganyika</option>
+            </select>
+          </div>
+          <div><label class="input-label">Commune / Quartier *</label><input class="input" type="text" placeholder="Gombe" x-model="form.commune"></div>
+        </div>
+        <div style="margin-bottom:14px;"><label class="input-label">Téléphone *</label><input class="input" type="tel" placeholder="+243 8XX XXX XXX" x-model="form.telephone"></div>
+        <div style="margin-bottom:14px;"><label class="input-label">Email *</label><input class="input" type="email" placeholder="jean@exemple.com" x-model="form.email"></div>
+        <div style="margin-bottom:28px;"><label class="input-label">Mot de passe *</label><input class="input" type="password" placeholder="••••••••" x-model="form.password"></div>
+        <button class="btn btn-gradient" style="width:100%;justify-content:center;padding:13px;" @click="next()">Continuer — Infos académiques →</button>
+      </div>
+
+      <!-- STEP 2: Infos académiques -->
+      <div x-show="step === 2" x-transition:enter="fade-up">
+        <div style="margin-bottom:14px;">
+          <label class="input-label">Université *</label>
+          <select class="input select" x-model="form.universite">
+            <option value="">Sélectionner l'université</option>
+            <option>Université de Kinshasa (UNIKIN)</option><option>Université Protestante au Congo (UPC)</option><option>Université Catholique du Congo (UCC)</option><option>Université de Lubumbashi (UNILU)</option><option>Université officielle de Bukavu (UOB)</option><option>Institut Supérieur de Commerce (ISC)</option><option>Institut Supérieur des Techniques Appliquées (ISTA)</option><option>Université Pédagogique Nationale (UPN)</option><option>Autre</option>
+          </select>
+        </div>
+        <div style="margin-bottom:14px;"><label class="input-label">Faculté / Filière *</label><input class="input" type="text" placeholder="Administration des Affaires & Sci. Éco." x-model="form.faculte"></div>
+        <div style="margin-bottom:14px;"><label class="input-label">Département / Section *</label><input class="input" type="text" placeholder="Gestion des Entreprises" x-model="form.departement"></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
+          <div>
+            <label class="input-label">Promotion *</label>
+            <select class="input select" x-model="form.promotion">
+              <option value="">Sélectionner</option><option>L1</option><option>L2</option><option>L3</option><option>M1</option><option>M2</option><option>Doctorat</option>
+            </select>
+          </div>
+          <div>
+            <label class="input-label">Année d'obtention *</label>
+            <select class="input select" x-model="form.annee">
+              <option value="">Année</option>
+              <template x-for="y in years" :key="y"><option x-text="y"></option></template>
+            </select>
+          </div>
+        </div>
+        <div style="margin-bottom:28px;">
+          <label class="input-label">Mention / Résultat *</label>
+          <select class="input select" x-model="form.mention">
+            <option value="">Sélectionner la mention</option>
+            <option>Grande Distinction (≥ 80%)</option><option>Distinction (70–79%)</option><option>Satisfaction (60–69%)</option><option>Réussite (50–59%)</option><option>En cours d'études</option>
+          </select>
+        </div>
+        <div style="display:flex;gap:12px;">
+          <button class="btn btn-outline" style="flex:1;justify-content:center;" @click="prev()">← Retour</button>
+          <button class="btn btn-gradient" style="flex:2;justify-content:center;" @click="next()">Continuer — Portfolio →</button>
+        </div>
+      </div>
+
+      <!-- STEP 3: Portfolio & CV -->
+      <div x-show="step === 3" x-transition:enter="fade-up">
+        <div style="margin-bottom:20px;">
+          <label class="input-label" style="margin-bottom:10px;">Photo de profil</label>
+          <div class="upload-zone" id="photo-zone" onclick="document.getElementById('photo-input').click()">
+            <svg width="28" height="28" fill="none" stroke="var(--primary-l)" stroke-width="1.5" viewBox="0 0 24 24" style="margin-bottom:8px;"><circle cx="12" cy="8" r="4"/><path d="M6 20v-1a6 6 0 0 1 12 0v1"/></svg>
+            <div style="font-size:14px;font-weight:500;">Clique pour ajouter ta photo</div>
+            <div style="font-size:12px;color:var(--text-muted);">JPG, PNG — max 2 Mo</div>
+          </div>
+          <input type="file" id="photo-input" accept="image/*" style="display:none" onchange="handleFile(this.files[0],'photo-zone',null)">
+        </div>
+        <div style="margin-bottom:20px;">
+          <label class="input-label" style="margin-bottom:10px;">CV (PDF) *</label>
+          <div class="upload-zone" id="cv-zone" onclick="document.getElementById('cv-input').click()">
+            <svg width="28" height="28" fill="none" stroke="var(--primary-l)" stroke-width="1.5" viewBox="0 0 24 24" style="margin-bottom:8px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            <div style="font-size:14px;font-weight:500;">Glisse ou clique pour ajouter ton CV</div>
+            <div style="font-size:12px;color:var(--text-muted);">PDF uniquement — max 5 Mo</div>
+          </div>
+          <input type="file" id="cv-input" accept=".pdf" style="display:none" onchange="handleFile(this.files[0],'cv-zone',null)">
+        </div>
+        <div style="margin-bottom:14px;"><label class="input-label">GitHub (optionnel)</label><input class="input" type="url" placeholder="https://github.com/tonpseudo" x-model="form.github"></div>
+        <div style="margin-bottom:14px;"><label class="input-label">Behance (optionnel)</label><input class="input" type="url" placeholder="https://www.behance.net/tonpseudo" x-model="form.behance"></div>
+        <div style="margin-bottom:14px;"><label class="input-label">Google Drive (portfolio, projets…)</label><input class="input" type="url" placeholder="https://drive.google.com/..." x-model="form.drive"></div>
+        <div style="margin-bottom:28px;">
+          <label class="input-label">Présentation courte *</label>
+          <textarea class="input" rows="4" placeholder="En quelques lignes, parle de toi, de ta passion, de ton projet professionnel..." x-model="form.bio" style="resize:vertical;"></textarea>
+          <div style="font-size:12px;color:var(--text-muted);margin-top:4px;" x-text="(form.bio||'').length + ' / 400 caractères'"></div>
+        </div>
+        <div style="display:flex;gap:12px;">
+          <button class="btn btn-outline" style="flex:1;justify-content:center;" @click="prev()">← Retour</button>
+          <button class="btn btn-gradient" style="flex:2;justify-content:center;" @click="submit()">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            Créer mon profil
+          </button>
+        </div>
+      </div>
+
+      <!-- STEP 4: Succès -->
+      <div x-show="step === 5" x-transition:enter="fade-up" style="text-align:center;padding:40px 0;">
+        <div style="width:72px;height:72px;background:rgba(16,185,129,.15);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;">
+          <svg width="32" height="32" fill="none" stroke="#10b981" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <h2 style="font-size:26px;font-weight:800;margin-bottom:12px;">Profil créé avec succès ! 🎉</h2>
+        <p style="color:var(--text-muted);font-size:15px;line-height:1.7;margin-bottom:32px;">Bienvenue sur Kazi, <strong style="color:var(--text);" x-text="form.prenom"></strong> !<br>Prochaine étape : passe les tests de compétences pour obtenir ton Kazi Score™.</p>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <a href="dashboard-diplome.html" class="btn btn-gradient btn-lg" style="justify-content:center;">Aller à mon tableau de bord</a>
+          <button class="btn btn-outline btn-lg" style="justify-content:center;">Passer les tests de compétences maintenant</button>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- end right panel -->
+</div><!-- end grid -->
+</div><!-- end x-data -->
+
+<script src="assets/js/app.js"></script>
+<script>
+function inscriptionApp() {
+  const yr = new Date().getFullYear();
+  const years = Array.from({length:10}, (_,i) => yr - i);
+  return {
+    step: 1,
+    years,
+    steps: [
+      { title: 'Informations personnelles', subtitle: 'Identité, province et contact' },
+      { title: 'Parcours académique',       subtitle: 'Université, faculté et résultats' },
+      { title: 'Portfolio & Documents',     subtitle: 'CV, liens et présentation' },
+      { title: 'Profil créé !',             subtitle: 'Bienvenue sur Kazi' },
+    ],
+    form: { prenom:'', nom:'', postnom:'', sexe:'', dateNaissance:'', province:'', commune:'', telephone:'', email:'', password:'', universite:'', faculte:'', departement:'', promotion:'', annee:'', mention:'', github:'', behance:'', drive:'', bio:'' },
+    next() { if (this.step < 4) this.step++; },
+    prev() { if (this.step > 1) this.step--; },
+    submit() { this.step = 5; showToast('Profil créé avec succès !', 'success'); },
+  };
+}
+</script>
+</body>
+</html>
