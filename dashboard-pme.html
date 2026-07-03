@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Espace Entreprise — Kazi</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config={darkMode:'class',theme:{extend:{fontFamily:{sans:['Inter','sans-serif']}}}}</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="dark">
+<div style="display:flex;min-height:100vh;background:var(--bg);">
+
+<!-- ══ SIDEBAR ══ -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <a href="index.html" style="display:flex;align-items:center;gap:10px;font-size:17px;font-weight:800;">
+      <div style="width:28px;height:28px;background:var(--gradient);border-radius:7px;display:flex;align-items:center;justify-content:center;"><svg width="13" height="13" fill="none" stroke="#fff" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div>
+      <span class="gradient-text">KAZI</span>
+    </a>
+  </div>
+  <!-- Company info -->
+  <div style="padding:16px 12px 8px;border-bottom:1px solid var(--border);">
+    <div style="display:flex;align-items:center;gap:12px;padding:10px;background:var(--surface-2);border-radius:10px;">
+      <div style="width:40px;height:40px;border-radius:8px;background:linear-gradient(135deg,#3b82f6,#06b6d4);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#fff;flex-shrink:0;">TS</div>
+      <div style="min-width:0;">
+        <div style="font-weight:600;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Tech Solutions SARL</div>
+        <div style="display:flex;align-items:center;gap:5px;margin-top:3px;"><svg width="11" height="11" fill="none" stroke="#60a5fa" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span style="font-size:11px;color:#60a5fa;font-weight:500;">Entreprise vérifiée</span></div>
+      </div>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <a href="dashboard-pme.html" class="nav-item active" data-page="dashboard-pme.html">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Tableau de bord
+    </a>
+    <div class="nav-item">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 13.255A23.931 23.931 0 0 1 12 15c-3.183 0-6.22-.62-9-1.745"/><path d="M8 19l4-1 4 1"/><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M8 8V5a4 4 0 0 1 8 0v3"/></svg>Mes offres d'emploi
+      <span style="margin-left:auto;background:var(--primary);color:#fff;font-size:10px;font-weight:700;padding:1px 7px;border-radius:999px;">4</span>
+    </div>
+    <a href="recherche.html" class="nav-item" data-page="recherche.html">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>Rechercher des profils
+    </a>
+    <div class="nav-item">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Candidatures reçues
+      <span style="margin-left:auto;background:var(--danger);color:#fff;font-size:10px;font-weight:700;padding:1px 7px;border-radius:999px;">12</span>
+    </div>
+    <div class="nav-item">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Favoris
+    </div>
+    <div class="nav-item">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Messages
+      <span style="margin-left:auto;background:var(--danger);color:#fff;font-size:10px;font-weight:700;padding:1px 7px;border-radius:999px;">5</span>
+    </div>
+    <div class="nav-item">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Statistiques
+    </div>
+    <div class="nav-item">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>Paramètres
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <button class="btn btn-gradient" style="width:100%;justify-content:center;">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Publier une offre
+    </button>
+  </div>
+</aside>
+
+<!-- ══ MAIN CONTENT ══ -->
+<div class="main-content">
+  <div class="topbar">
+    <div>
+      <h2 style="font-size:17px;font-weight:700;">Tableau de bord Recruteur</h2>
+      <div style="font-size:12px;color:var(--text-muted);">Mercredi, 2 juillet 2026</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <button class="btn btn-ghost btn-sm" style="position:relative;">
+        <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        <span style="position:absolute;top:4px;right:4px;width:8px;height:8px;background:var(--danger);border-radius:50%;border:1.5px solid var(--surface);"></span>
+      </button>
+      <div style="width:34px;height:34px;border-radius:8px;background:linear-gradient(135deg,#3b82f6,#06b6d4);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;color:#fff;cursor:pointer;">TS</div>
+    </div>
+  </div>
+
+  <div class="page-content">
+
+    <!-- STATS CARDS -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px;margin-bottom:24px;">
+      <div class="stat-card">
+        <div style="font-size:12px;color:var(--text-muted);font-weight:500;text-transform:uppercase;letter-spacing:.04em;margin-bottom:10px;">Offres publiées</div>
+        <div style="font-size:30px;font-weight:800;">4</div>
+        <div style="font-size:12px;color:#10b981;margin-top:4px;">3 actives · 1 expirée</div>
+      </div>
+      <div class="stat-card">
+        <div style="font-size:12px;color:var(--text-muted);font-weight:500;text-transform:uppercase;letter-spacing:.04em;margin-bottom:10px;">Candidatures reçues</div>
+        <div style="font-size:30px;font-weight:800;">47</div>
+        <div style="font-size:12px;color:var(--danger);margin-top:4px;">12 non lues</div>
+      </div>
+      <div class="stat-card">
+        <div style="font-size:12px;color:var(--text-muted);font-weight:500;text-transform:uppercase;letter-spacing:.04em;margin-bottom:10px;">Profils consultés</div>
+        <div style="font-size:30px;font-weight:800;">89</div>
+        <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Ce mois-ci</div>
+      </div>
+      <div class="stat-card">
+        <div style="font-size:12px;color:var(--text-muted);font-weight:500;text-transform:uppercase;letter-spacing:.04em;margin-bottom:10px;">Entretiens planifiés</div>
+        <div style="font-size:30px;font-weight:800;">6</div>
+        <div style="font-size:12px;color:#fbbf24;margin-top:4px;">2 cette semaine</div>
+      </div>
+    </div>
+
+    <!-- MAIN GRID -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px;">
+
+      <!-- Offres actives -->
+      <div class="stat-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+          <div style="font-weight:700;font-size:15px;">Offres actives</div>
+          <button class="btn btn-ghost btn-sm">+ Nouvelle offre</button>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="padding:14px;background:var(--surface-2);border-radius:10px;border-left:3px solid var(--primary);">
+            <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+              <div style="font-weight:600;font-size:14px;">Comptable junior</div>
+              <span class="badge badge-success">Active</span>
+            </div>
+            <div style="font-size:12px;color:var(--text-muted);margin-bottom:8px;">Publiée le 28 juin · $300–400/mois</div>
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <span style="font-size:13px;"><strong>18</strong> candidatures</span>
+              <div style="display:flex;gap:8px;">
+                <button class="btn btn-ghost btn-sm" style="padding:5px 10px;">Voir</button>
+                <button class="btn btn-outline btn-sm" style="padding:5px 10px;">Modifier</button>
+              </div>
+            </div>
+          </div>
+          <div style="padding:14px;background:var(--surface-2);border-radius:10px;border-left:3px solid #60a5fa;">
+            <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+              <div style="font-weight:600;font-size:14px;">Développeur web junior</div>
+              <span class="badge badge-success">Active</span>
+            </div>
+            <div style="font-size:12px;color:var(--text-muted);margin-bottom:8px;">Publiée le 30 juin · $400–600/mois</div>
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <span style="font-size:13px;"><strong>24</strong> candidatures</span>
+              <div style="display:flex;gap:8px;">
+                <button class="btn btn-ghost btn-sm" style="padding:5px 10px;">Voir</button>
+                <button class="btn btn-outline btn-sm" style="padding:5px 10px;">Modifier</button>
+              </div>
+            </div>
+          </div>
+          <div style="padding:14px;background:var(--surface-2);border-radius:10px;border-left:3px solid #34d399;">
+            <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+              <div style="font-weight:600;font-size:14px;">Responsable marketing</div>
+              <span class="badge badge-success">Active</span>
+            </div>
+            <div style="font-size:12px;color:var(--text-muted);margin-bottom:8px;">Publiée le 1er juillet · $500–700/mois</div>
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <span style="font-size:13px;"><strong>5</strong> candidatures</span>
+              <div style="display:flex;gap:8px;">
+                <button class="btn btn-ghost btn-sm" style="padding:5px 10px;">Voir</button>
+                <button class="btn btn-outline btn-sm" style="padding:5px 10px;">Modifier</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Top candidats recommandés -->
+      <div class="stat-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+          <div style="font-weight:700;font-size:15px;">Top candidats recommandés</div>
+          <a href="recherche.html" class="btn btn-ghost btn-sm">Voir tout →</a>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div class="candidate-card" style="padding:14px;">
+            <div style="display:flex;align-items:center;gap:12px;">
+              <div class="avatar-placeholder" style="width:42px;height:42px;font-size:13px;flex-shrink:0;">AK</div>
+              <div style="flex:1;min-width:0;">
+                <div style="display:flex;justify-content:space-between;">
+                  <div style="font-weight:600;font-size:14px;">Amisi Kabongo</div>
+                  <div style="font-size:16px;font-weight:800;color:var(--primary-l);">87</div>
+                </div>
+                <div style="font-size:12px;color:var(--text-muted);">Gestion · UPC · Kinshasa</div>
+                <div style="display:flex;gap:5px;margin-top:6px;flex-wrap:wrap;"><span class="skill-tag" style="font-size:11px;padding:2px 8px;">Excel 🥇</span><span class="skill-tag" style="font-size:11px;padding:2px 8px;">Compta</span></div>
+              </div>
+            </div>
+            <div style="display:flex;gap:8px;margin-top:10px;">
+              <a href="profil.html" class="btn btn-outline btn-sm" style="flex:1;justify-content:center;">Voir profil</a>
+              <button class="btn btn-gradient btn-sm" style="flex:1;justify-content:center;">Inviter</button>
+            </div>
+          </div>
+          <div class="candidate-card" style="padding:14px;">
+            <div style="display:flex;align-items:center;gap:12px;">
+              <div class="avatar-placeholder" style="width:42px;height:42px;font-size:13px;flex-shrink:0;background:linear-gradient(135deg,#10b981,#059669);">MN</div>
+              <div style="flex:1;min-width:0;">
+                <div style="display:flex;justify-content:space-between;">
+                  <div style="font-weight:600;font-size:14px;">Marie Nzamba</div>
+                  <div style="font-size:16px;font-weight:800;color:#34d399;">92</div>
+                </div>
+                <div style="font-size:12px;color:var(--text-muted);">Informatique · ISTA · Kinshasa</div>
+                <div style="display:flex;gap:5px;margin-top:6px;flex-wrap:wrap;"><span class="skill-tag" style="font-size:11px;padding:2px 8px;">HTML/CSS ⭐</span><span class="skill-tag" style="font-size:11px;padding:2px 8px;">SQL 🥇</span></div>
+              </div>
+            </div>
+            <div style="display:flex;gap:8px;margin-top:10px;">
+              <a href="profil.html" class="btn btn-outline btn-sm" style="flex:1;justify-content:center;">Voir profil</a>
+              <button class="btn btn-gradient btn-sm" style="flex:1;justify-content:center;">Inviter</button>
+            </div>
+          </div>
+          <div class="candidate-card" style="padding:14px;">
+            <div style="display:flex;align-items:center;gap:12px;">
+              <div class="avatar-placeholder" style="width:42px;height:42px;font-size:13px;flex-shrink:0;background:linear-gradient(135deg,#f59e0b,#d97706);">JM</div>
+              <div style="flex:1;min-width:0;">
+                <div style="display:flex;justify-content:space-between;">
+                  <div style="font-weight:600;font-size:14px;">Jean-Paul Mwamba</div>
+                  <div style="font-size:16px;font-weight:800;color:#fbbf24;">78</div>
+                </div>
+                <div style="font-size:12px;color:var(--text-muted);">Marketing · UCC · Kinshasa</div>
+                <div style="display:flex;gap:5px;margin-top:6px;flex-wrap:wrap;"><span class="skill-tag" style="font-size:11px;padding:2px 8px;">Marketing 🥈</span><span class="skill-tag" style="font-size:11px;padding:2px 8px;">Canva</span></div>
+              </div>
+            </div>
+            <div style="display:flex;gap:8px;margin-top:10px;">
+              <a href="profil.html" class="btn btn-outline btn-sm" style="flex:1;justify-content:center;">Voir profil</a>
+              <button class="btn btn-gradient btn-sm" style="flex:1;justify-content:center;">Inviter</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHART -->
+    <div class="stat-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+        <div style="font-weight:700;font-size:15px;">Candidatures reçues — 30 derniers jours</div>
+        <select class="input select" style="width:auto;padding:6px 30px 6px 10px;font-size:13px;"><option>30 derniers jours</option><option>3 mois</option><option>6 mois</option></select>
+      </div>
+      <canvas id="candidaturesChart" style="max-height:220px;"></canvas>
+    </div>
+
+  </div><!-- end page-content -->
+</div><!-- end main-content -->
+</div>
+
+<script src="assets/js/app.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const ctx = document.getElementById('candidaturesChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['3 juin','5','7','9','11','13','15','17','19','21','23','25','27','29 juin','1 juil','2 juil'],
+      datasets: [{
+        label: 'Candidatures',
+        data: [2,0,3,1,5,2,4,6,3,8,4,7,5,9,4,6],
+        backgroundColor: 'rgba(124,58,237,.5)',
+        borderColor: '#7c3aed',
+        borderWidth: 2,
+        borderRadius: 6,
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { color: 'rgba(255,255,255,.05)' }, ticks: { color: '#71717a', font: { size: 11 } } },
+        y: { grid: { color: 'rgba(255,255,255,.05)' }, ticks: { color: '#71717a', stepSize: 2 } },
+      }
+    }
+  });
+});
+</script>
+</body>
+</html>
