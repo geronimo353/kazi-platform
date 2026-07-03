@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kazi — Connecter les talents aux opportunités</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config={darkMode:'class',theme:{extend:{fontFamily:{sans:['Inter','sans-serif']}}}}</script>
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="dark">
+
+<!-- ══════════════ NAVBAR ══════════════ -->
+<nav class="navbar" x-data="{open:false}">
+  <a href="index.html" class="nav-logo">
+    <div style="width:34px;height:34px;background:var(--gradient);border-radius:9px;display:flex;align-items:center;justify-content:center;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+    </div>
+    <span class="gradient-text">KAZI</span>
+  </a>
+  <div class="nav-links hidden md:flex">
+    <a href="#fonctionnement" class="nav-link">Comment ça marche</a>
+    <a href="#fonctionnalites" class="nav-link">Fonctionnalités</a>
+    <a href="#kazi-score" class="nav-link">Kazi Score™</a>
+    <a href="#tarifs" class="nav-link">Tarifs</a>
+  </div>
+  <div class="nav-actions">
+    <a href="inscription-diplome.html" class="btn btn-ghost hidden md:inline-flex">Se connecter</a>
+    <a href="inscription-diplome.html" class="btn btn-gradient">Commencer</a>
+    <button class="md:hidden btn btn-ghost btn-sm" @click="open=!open">
+      <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+  <!-- Mobile menu -->
+  <div x-show="open" x-transition class="absolute top-16 left-0 right-0 bg-zinc-900 border-b border-zinc-800 p-4 flex flex-col gap-2 md:hidden" style="display:none;">
+    <a href="#fonctionnement" class="nav-link" @click="open=false">Comment ça marche</a>
+    <a href="#fonctionnalites" class="nav-link" @click="open=false">Fonctionnalités</a>
+    <a href="#kazi-score" class="nav-link" @click="open=false">Kazi Score™</a>
+    <a href="inscription-diplome.html" class="btn btn-gradient w-full justify-center mt-2">Commencer</a>
+  </div>
+</nav>
+
+<!-- ══════════════ HERO ══════════════ -->
+<section class="hero-bg grid-bg" style="min-height:100vh;display:flex;align-items:center;padding-top:64px;">
+  <div style="max-width:1200px;margin:0 auto;padding:80px 48px;text-align:center;position:relative;z-index:1;">
+    <div class="fade-up">
+      <div class="badge badge-success" style="margin-bottom:24px;font-size:13px;">
+        <span>✦</span> La plateforme RH #1 en RDC
+      </div>
+    </div>
+    <h1 class="fade-up" style="font-size:clamp(42px,7vw,88px);font-weight:900;line-height:1.02;letter-spacing:-2px;margin-bottom:24px;">
+      Le talent congolais<br>mérite une <span class="gradient-text">preuve.</span>
+    </h1>
+    <p class="fade-up" style="font-size:clamp(16px,2vw,20px);color:var(--text-muted);max-width:640px;margin:0 auto 40px;line-height:1.7;">
+      Kazi connecte les jeunes diplômés congolais aux PMEs grâce au <strong style="color:var(--text)">Kazi Score™</strong> — un indicateur de confiance qui va au-delà du diplôme.
+    </p>
+    <div class="fade-up" style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:60px;">
+      <a href="inscription-diplome.html" class="btn btn-gradient btn-xl">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        Je suis diplômé
+      </a>
+      <a href="inscription-pme.html" class="btn btn-outline btn-xl">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="m8 21 4-4 4 4"/></svg>
+        Je suis une PME
+      </a>
+    </div>
+
+    <!-- Stats -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:20px;max-width:700px;margin:0 auto;">
+      <div class="glass" style="padding:20px;text-align:center;">
+        <div style="font-size:32px;font-weight:800;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;" data-count="4800" data-suffix="+">0</div>
+        <div style="font-size:13px;color:var(--text-muted);margin-top:4px;">Diplômés inscrits</div>
+      </div>
+      <div class="glass" style="padding:20px;text-align:center;">
+        <div style="font-size:32px;font-weight:800;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;" data-count="320" data-suffix="+">0</div>
+        <div style="font-size:13px;color:var(--text-muted);margin-top:4px;">PMEs partenaires</div>
+      </div>
+      <div class="glass" style="padding:20px;text-align:center;">
+        <div style="font-size:32px;font-weight:800;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;" data-count="1200" data-suffix="+">0</div>
+        <div style="font-size:13px;color:var(--text-muted);margin-top:4px;">Placements réussis</div>
+      </div>
+      <div class="glass" style="padding:20px;text-align:center;">
+        <div style="font-size:32px;font-weight:800;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;" data-count="26" data-suffix="provinces">0</div>
+        <div style="font-size:13px;color:var(--text-muted);margin-top:4px;">Provinces couvertes</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ COMMENT ÇA MARCHE ══════════════ -->
+<section id="fonctionnement" class="section" style="background:var(--surface);">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div style="text-align:center;margin-bottom:64px;">
+      <div class="badge badge-primary" style="margin-bottom:16px;">Simple &amp; efficace</div>
+      <h2 style="font-size:clamp(28px,4vw,46px);font-weight:800;margin-bottom:16px;">Comment ça marche ?</h2>
+      <p style="color:var(--text-muted);font-size:16px;max-width:500px;margin:0 auto;">Deux parcours, une seule plateforme. En quelques étapes seulement.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;" class="lg:grid-cols-2">
+      <!-- Diplômé -->
+      <div>
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:28px;">
+          <div class="feature-icon icon-bg-purple"><svg width="22" height="22" fill="none" stroke="#a78bfa" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+          <h3 style="font-size:20px;font-weight:700;">Pour les diplômés</h3>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:0;">
+          <div style="display:flex;gap:16px;padding-bottom:28px;border-left:2px solid var(--border);padding-left:20px;margin-left:16px;position:relative;">
+            <div style="position:absolute;left:-11px;top:0;width:20px;height:20px;border-radius:50%;background:var(--gradient);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0;">1</div>
+            <div><div style="font-weight:600;margin-bottom:4px;">Crée ton profil</div><div style="color:var(--text-muted);font-size:14px;line-height:1.6;">Infos personnelles, académiques, CV et portfolio en 3 minutes.</div></div>
+          </div>
+          <div style="display:flex;gap:16px;padding-bottom:28px;border-left:2px solid var(--border);padding-left:20px;margin-left:16px;position:relative;">
+            <div style="position:absolute;left:-11px;top:0;width:20px;height:20px;border-radius:50%;background:var(--gradient);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0;">2</div>
+            <div><div style="font-weight:600;margin-bottom:4px;">Passe les tests de compétences</div><div style="color:var(--text-muted);font-size:14px;line-height:1.6;">Algorithmique, Excel, SQL, Marketing digital… Prouve ce que tu vaux.</div></div>
+          </div>
+          <div style="display:flex;gap:16px;padding-left:20px;margin-left:16px;position:relative;">
+            <div style="position:absolute;left:-11px;top:0;width:20px;height:20px;border-radius:50%;background:var(--gradient);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0;">3</div>
+            <div><div style="font-weight:600;margin-bottom:4px;">Obtiens ton Kazi Score™</div><div style="color:var(--text-muted);font-size:14px;line-height:1.6;">Les PMEs te trouvent selon ton score. Postule ou sois contacté directement.</div></div>
+          </div>
+        </div>
+        <a href="inscription-diplome.html" class="btn btn-gradient" style="margin-top:28px;">Créer mon profil →</a>
+      </div>
+      <!-- PME -->
+      <div>
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:28px;">
+          <div class="feature-icon icon-bg-blue"><svg width="22" height="22" fill="none" stroke="#60a5fa" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg></div>
+          <h3 style="font-size:20px;font-weight:700;">Pour les PMEs</h3>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:0;">
+          <div style="display:flex;gap:16px;padding-bottom:28px;border-left:2px solid var(--border);padding-left:20px;margin-left:16px;position:relative;">
+            <div style="position:absolute;left:-11px;top:0;width:20px;height:20px;border-radius:50%;background:var(--gradient-g);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0;">1</div>
+            <div><div style="font-weight:600;margin-bottom:4px;">Enregistre ton entreprise</div><div style="color:var(--text-muted);font-size:14px;line-height:1.6;">RCCM, ID NAT, Numéro d'Impôt — ton compte est vérifié et badgé.</div></div>
+          </div>
+          <div style="display:flex;gap:16px;padding-bottom:28px;border-left:2px solid var(--border);padding-left:20px;margin-left:16px;position:relative;">
+            <div style="position:absolute;left:-11px;top:0;width:20px;height:20px;border-radius:50%;background:var(--gradient-g);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0;">2</div>
+            <div><div style="font-weight:600;margin-bottom:4px;">Publie une offre ou recherche un profil</div><div style="color:var(--text-muted);font-size:14px;line-height:1.6;">Filtre par compétences, province, score, badge, disponibilité.</div></div>
+          </div>
+          <div style="display:flex;gap:16px;padding-left:20px;margin-left:16px;position:relative;">
+            <div style="position:absolute;left:-11px;top:0;width:20px;height:20px;border-radius:50%;background:var(--gradient-g);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0;">3</div>
+            <div><div style="font-weight:600;margin-bottom:4px;">Recrute avec confiance</div><div style="color:var(--text-muted);font-size:14px;line-height:1.6;">Chat, rendez-vous, visio — tout en un seul endroit, zéro faux CV.</div></div>
+          </div>
+        </div>
+        <a href="inscription-pme.html" class="btn btn-success" style="margin-top:28px;background:var(--gradient-g);border:none;">Inscrire mon entreprise →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ FONCTIONNALITÉS ══════════════ -->
+<section id="fonctionnalites" class="section">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div style="text-align:center;margin-bottom:64px;">
+      <div class="badge badge-primary" style="margin-bottom:16px;">Tout ce dont vous avez besoin</div>
+      <h2 style="font-size:clamp(28px,4vw,46px);font-weight:800;margin-bottom:16px;">Des fonctionnalités <span class="gradient-text">pensées pour la RDC</span></h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;">
+      <div class="feature-card">
+        <div class="feature-icon icon-bg-purple"><svg width="22" height="22" fill="none" stroke="#a78bfa" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+        <h4 style="font-size:16px;font-weight:700;margin-bottom:8px;">Kazi Score™</h4>
+        <p style="color:var(--text-muted);font-size:14px;line-height:1.6;">Un score sur 100 calculé à partir de la formation, des tests, du portfolio et des recommandations vérifiées.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon icon-bg-blue"><svg width="22" height="22" fill="none" stroke="#60a5fa" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <h4 style="font-size:16px;font-weight:700;margin-bottom:8px;">Vérification d'entreprise</h4>
+        <p style="color:var(--text-muted);font-size:14px;line-height:1.6;">RCCM, ID NAT, Numéro d'Impôt vérifiés manuellement. Badge bleu garanti. Zéro entreprise fantôme.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon icon-bg-green"><svg width="22" height="22" fill="none" stroke="#34d399" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+        <h4 style="font-size:16px;font-weight:700;margin-bottom:8px;">Tests de compétences</h4>
+        <p style="color:var(--text-muted);font-size:14px;line-height:1.6;">Gestion, Informatique, Marketing, Droit… Badges Bronze, Silver, Gold, Expert pour prouver ses skills.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon icon-bg-amber"><svg width="22" height="22" fill="none" stroke="#fbbf24" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+        <h4 style="font-size:16px;font-weight:700;margin-bottom:8px;">Matching intelligent</h4>
+        <p style="color:var(--text-muted);font-size:14px;line-height:1.6;">Score, compétences, province, disponibilité, salaire — l'IA propose les candidats les plus pertinents.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon icon-bg-rose"><svg width="22" height="22" fill="none" stroke="#fb7185" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+        <h4 style="font-size:16px;font-weight:700;margin-bottom:8px;">Chat temps réel</h4>
+        <p style="color:var(--text-muted);font-size:14px;line-height:1.6;">Messagerie avec pièces jointes, CV, images. Prise de rendez-vous et visioconférence intégrées.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon icon-bg-purple"><svg width="22" height="22" fill="none" stroke="#a78bfa" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6v6H9z"/></svg></div>
+        <h4 style="font-size:16px;font-weight:700;margin-bottom:8px;">Kazi Challenge</h4>
+        <p style="color:var(--text-muted);font-size:14px;line-height:1.6;">Les PMEs publient des mini-défis réels. Les candidats livrent. Le travail parle à la place du diplôme.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ KAZI SCORE ══════════════ -->
+<section id="kazi-score" class="section" style="background:var(--surface);">
+  <div style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;">
+    <!-- Visual -->
+    <div style="display:flex;flex-direction:column;align-items:center;gap:24px;">
+      <div class="glass" style="padding:40px;text-align:center;max-width:360px;width:100%;">
+        <div id="score-demo" style="display:flex;justify-content:center;margin-bottom:20px;"></div>
+        <div style="font-size:18px;font-weight:700;margin-bottom:8px;">Amisi Kabongo</div>
+        <div style="color:var(--text-muted);font-size:13px;margin-bottom:16px;">Gestion des entreprises • UPC</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;">
+          <span class="skill-tag">Excel</span><span class="skill-tag">Comptabilité</span><span class="skill-tag">Gestion de projet</span>
+        </div>
+        <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);">
+          <span class="badge badge-gold">🥇 Badge Gold</span>
+          <span class="badge badge-verified" style="margin-left:8px;">✓ Diplôme vérifié UPC</span>
+        </div>
+      </div>
+    </div>
+    <!-- Text -->
+    <div>
+      <div class="badge badge-primary" style="margin-bottom:20px;">Kazi Score™</div>
+      <h2 style="font-size:clamp(28px,3.5vw,42px);font-weight:800;margin-bottom:20px;line-height:1.1;">Ce n'est plus un CV.<br>C'est une <span class="gradient-text">preuve.</span></h2>
+      <p style="color:var(--text-muted);font-size:15px;line-height:1.8;margin-bottom:28px;">LinkedIn montre un CV. Kazi montre un score construit sur ce que le candidat a vraiment accompli.</p>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div style="display:flex;align-items:center;gap:16px;padding:14px 16px;background:var(--surface-2);border-radius:10px;">
+          <div style="font-size:20px;font-weight:800;color:var(--primary-l);width:40px;text-align:right;">20%</div>
+          <div><div style="font-weight:600;font-size:14px;">Formation académique</div><div style="font-size:12px;color:var(--text-muted);">Université, faculté, mention</div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:16px;padding:14px 16px;background:var(--surface-2);border-radius:10px;">
+          <div style="font-size:20px;font-weight:800;color:#60a5fa;width:40px;text-align:right;">30%</div>
+          <div><div style="font-weight:600;font-size:14px;">Tests de compétences</div><div style="font-size:12px;color:var(--text-muted);">Résultats vérifiés par la plateforme</div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:16px;padding:14px 16px;background:var(--surface-2);border-radius:10px;">
+          <div style="font-size:20px;font-weight:800;color:#34d399;width:40px;text-align:right;">20%</div>
+          <div><div style="font-weight:600;font-size:14px;">Portfolio &amp; projets</div><div style="font-size:12px;color:var(--text-muted);">GitHub, Behance, travaux réels</div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:16px;padding:14px 16px;background:var(--surface-2);border-radius:10px;">
+          <div style="font-size:20px;font-weight:800;color:#fbbf24;width:40px;text-align:right;">15%</div>
+          <div><div style="font-weight:600;font-size:14px;">Recommandations vérifiées</div><div style="font-size:12px;color:var(--text-muted);">Profs, employeurs, superviseurs</div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:16px;padding:14px 16px;background:var(--surface-2);border-radius:10px;">
+          <div style="font-size:20px;font-weight:800;color:#fb7185;width:40px;text-align:right;">15%</div>
+          <div><div style="font-weight:600;font-size:14px;">Expérience &amp; complétude</div><div style="font-size:12px;color:var(--text-muted);">Stages, projets, profil complet</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ TARIFS ══════════════ -->
+<section id="tarifs" class="section">
+  <div style="max-width:900px;margin:0 auto;text-align:center;">
+    <div class="badge badge-primary" style="margin-bottom:16px;">Tarifs simples</div>
+    <h2 style="font-size:clamp(28px,4vw,46px);font-weight:800;margin-bottom:16px;">Commencez gratuitement</h2>
+    <p style="color:var(--text-muted);font-size:16px;margin-bottom:48px;">Passez au premium pour débloquer toutes les fonctionnalités.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;">
+      <!-- Free -->
+      <div class="feature-card" style="text-align:left;">
+        <div style="font-size:13px;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px;">Gratuit</div>
+        <div style="font-size:36px;font-weight:900;margin-bottom:4px;">0$</div>
+        <div style="color:var(--text-muted);font-size:14px;margin-bottom:24px;">Pour toujours</div>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:28px;">
+          <div style="display:flex;align-items:center;gap:10px;font-size:14px;"><span style="color:#34d399;">✓</span> Profil public</div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:14px;"><span style="color:#34d399;">✓</span> 2 tests de compétences</div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:14px;"><span style="color:#34d399;">✓</span> Kazi Score de base</div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text-muted);"><span>✗</span> Messagerie illimitée</div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text-muted);"><span>✗</span> Visibilité prioritaire</div>
+        </div>
+        <a href="inscription-diplome.html" class="btn btn-outline" style="width:100%;justify-content:center;">Commencer gratuitement</a>
+      </div>
+      <!-- Premium Diplômé -->
+      <div class="feature-card" style="text-align:left;border-color:var(--primary);position:relative;overflow:hidden;">
+        <div style="position:absolute;top:14px;right:14px;" class="badge badge-primary">⭐ Populaire</div>
+        <div style="font-size:13px;color:var(--primary-l);font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px;">Premium Diplômé</div>
+        <div style="font-size:36px;font-weight:900;margin-bottom:4px;"><span class="gradient-text">5$</span></div>
+        <div style="color:var(--text-muted);font-size:14px;margin-bottom:24px;">par mois</div>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:28px;">
+          <div style="display:flex;align-items:center;gap:10px;font-size:14px;"><span style="color:#34d399;">✓</span> Tests illimités + badges</div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:14px;"><span style="color:#34d399;">✓</span> Kazi Score complet</div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:14px;"><span style="color:#34d399;">✓</span> Visibilité prioritaire</div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:14px;"><span style="color:#34d399;">✓</span> Messagerie illimitée</div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:14px;"><span style="color:#34d399;">✓</span> Passeport numérique</div>
+        </div>
+        <a href="inscription-diplome.html" class="btn btn-gradient" style="width:100%;justify-content:center;">Passer au Premium</a>
+        <div style="font-size:12px;color:var(--text-muted);text-align:center;margin-top:10px;">Orange Money · Airtel Money · M-Pesa</div>
+      </div>
+      <!-- PME -->
+      <div class="feature-card" style="text-align:left;">
+        <div style="font-size:13px;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px;">Entreprise</div>
+        <div style="font-size:36px;font-weight:900;margin-bottom:4px;">15$</div>
+        <div style="color:var(--text-muted);font-size:14px;margin-bottom:24px;">par mois</div>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:28px;">
+          <div style="display:flex;align-items:center;gap:10px;font-size:14px;"><span style="color:#34d399;">✓</span> Offres illimitées</div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:14px;"><span style="color:#34d399;">✓</span> Recherche avancée</div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:14px;"><span style="color:#34d399;">✓</span> Accès Kazi Score complet</div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:14px;"><span style="color:#34d399;">✓</span> Kazi Challenges</div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:14px;"><span style="color:#34d399;">✓</span> Statistiques recrutement</div>
+        </div>
+        <a href="inscription-pme.html" class="btn btn-outline" style="width:100%;justify-content:center;">Inscrire mon entreprise</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ CTA FINAL ══════════════ -->
+<section class="section hero-bg" style="text-align:center;">
+  <div style="max-width:600px;margin:0 auto;position:relative;z-index:1;">
+    <h2 style="font-size:clamp(28px,4vw,48px);font-weight:900;margin-bottom:16px;">Prêt à rejoindre Kazi ?</h2>
+    <p style="color:var(--text-muted);font-size:16px;margin-bottom:36px;">Rejoins les milliers de diplômés et PMEs qui font confiance à Kazi pour bâtir la RDC de demain.</p>
+    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+      <a href="inscription-diplome.html" class="btn btn-gradient btn-lg">Je suis diplômé</a>
+      <a href="inscription-pme.html" class="btn btn-outline btn-lg">Je recrute</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ FOOTER ══════════════ -->
+<footer style="background:var(--surface);border-top:1px solid var(--border);padding:48px;">
+  <div style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;flex-wrap:wrap;">
+    <div>
+      <div class="nav-logo" style="margin-bottom:12px;"><div style="width:30px;height:30px;background:var(--gradient);border-radius:8px;display:flex;align-items:center;justify-content:center;"><svg width="16" height="16" fill="none" stroke="#fff" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div><span class="gradient-text">KAZI</span></div>
+      <p style="color:var(--text-muted);font-size:14px;max-width:280px;line-height:1.6;">Connecter les talents congolais aux opportunités qui leur correspondent.</p>
+    </div>
+    <div>
+      <div style="font-weight:600;margin-bottom:16px;font-size:14px;">Plateforme</div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <a href="inscription-diplome.html" style="color:var(--text-muted);font-size:14px;">Diplômés</a>
+        <a href="inscription-pme.html" style="color:var(--text-muted);font-size:14px;">Entreprises</a>
+        <a href="recherche.html" style="color:var(--text-muted);font-size:14px;">Recherche</a>
+        <a href="admin.html" style="color:var(--text-muted);font-size:14px;">Admin</a>
+      </div>
+    </div>
+    <div>
+      <div style="font-weight:600;margin-bottom:16px;font-size:14px;">Pages</div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <a href="dashboard-diplome.html" style="color:var(--text-muted);font-size:14px;">Tableau de bord</a>
+        <a href="profil.html" style="color:var(--text-muted);font-size:14px;">Profil diplômé</a>
+        <a href="dashboard-pme.html" style="color:var(--text-muted);font-size:14px;">Espace PME</a>
+      </div>
+    </div>
+    <div>
+      <div style="font-weight:600;margin-bottom:16px;font-size:14px;">Contact</div>
+      <div style="display:flex;flex-direction:column;gap:10px;color:var(--text-muted);font-size:14px;">
+        <span>📍 Kinshasa, RDC</span>
+        <span>📧 hello@kazi.cd</span>
+        <span>📱 +243 XXX XXX XXX</span>
+      </div>
+    </div>
+  </div>
+  <div style="max-width:1100px;margin:40px auto 0;padding-top:24px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+    <span style="color:var(--text-muted);font-size:13px;">© 2026 Kazi Platform. Tous droits réservés.</span>
+    <span style="color:var(--text-muted);font-size:13px;">Fait avec ❤️ à Kinshasa 🇨🇩</span>
+  </div>
+</footer>
+
+<script src="assets/js/app.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const el = document.getElementById('score-demo');
+    if (el) renderScoreRing(el, 87, 140, 12);
+  });
+</script>
+</body>
+</html>
