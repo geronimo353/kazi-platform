@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mon Tableau de Bord — Kazi</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config={darkMode:'class',theme:{extend:{fontFamily:{sans:['Inter','sans-serif']}}}}</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="dark">
+<div x-data="{ activeTab:'dashboard', sideOpen:false }" style="display:flex;min-height:100vh;background:var(--bg);">
+
+<!-- ══ SIDEBAR ══ -->
+<aside class="sidebar" :class="{'open':sideOpen}">
+  <div class="sidebar-logo">
+    <a href="index.html" style="display:flex;align-items:center;gap:10px;font-size:17px;font-weight:800;">
+      <div style="width:28px;height:28px;background:var(--gradient);border-radius:7px;display:flex;align-items:center;justify-content:center;"><svg width="13" height="13" fill="none" stroke="#fff" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div>
+      <span class="gradient-text">KAZI</span>
+    </a>
+  </div>
+  <!-- User card -->
+  <div style="padding:16px 12px 8px;border-bottom:1px solid var(--border);">
+    <div style="display:flex;align-items:center;gap:12px;padding:10px;background:var(--surface-2);border-radius:10px;">
+      <div class="avatar-placeholder" style="width:40px;height:40px;font-size:14px;flex-shrink:0;">AK</div>
+      <div style="min-width:0;">
+        <div style="font-weight:600;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Amisi Kabongo</div>
+        <div style="font-size:12px;color:var(--text-muted);">L3 Gestion • UPC</div>
+      </div>
+    </div>
+    <div style="margin-top:10px;padding:10px 12px;background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.2);border-radius:8px;display:flex;align-items:center;justify-content:space-between;">
+      <div style="font-size:12px;color:var(--text-muted);">Kazi Score™</div>
+      <div style="font-size:18px;font-weight:900;color:var(--primary-l);">87 <span style="font-size:11px;font-weight:500;color:var(--text-muted);">/100</span></div>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <a href="dashboard-diplome.html" class="nav-item active" data-page="dashboard-diplome.html">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Tableau de bord
+    </a>
+    <a href="profil.html" class="nav-item" data-page="profil.html">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Mon profil
+    </a>
+    <div class="nav-item">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 13.255A23.931 23.931 0 0 1 12 15c-3.183 0-6.22-.62-9-1.745"/><path d="M8 19l4-1 4 1"/><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M8 8V5a4 4 0 0 1 8 0v3"/></svg>Offres d'emploi
+    </div>
+    <div class="nav-item" style="position:relative;">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Candidatures
+      <span style="margin-left:auto;background:var(--primary);color:#fff;font-size:10px;font-weight:700;padding:1px 7px;border-radius:999px;">3</span>
+    </div>
+    <div class="nav-item" style="position:relative;">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Messages
+      <span style="margin-left:auto;background:var(--danger);color:#fff;font-size:10px;font-weight:700;padding:1px 7px;border-radius:999px;">2</span>
+    </div>
+    <div class="nav-item">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M5.34 18.66l-1.41 1.41M2 12h2M20 12h2M6.34 5.34L4.93 4.93M18.66 18.66l1.41 1.41M12 2v2M12 20v2"/></svg>Tests de compétences
+    </div>
+    <div class="nav-item">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>Paramètres
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="index.html" class="nav-item" style="color:var(--danger);">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Déconnexion
+    </a>
+  </div>
+</aside>
+
+<!-- ══ MAIN CONTENT ══ -->
+<div class="main-content">
+  <!-- Topbar -->
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:14px;">
+      <button class="btn btn-ghost btn-sm md:hidden" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
+      <div>
+        <h2 style="font-size:17px;font-weight:700;">Tableau de bord</h2>
+        <div style="font-size:12px;color:var(--text-muted);">Mercredi, 2 juillet 2026</div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <button class="btn btn-ghost btn-sm" style="position:relative;">
+        <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        <span style="position:absolute;top:4px;right:4px;width:8px;height:8px;background:var(--danger);border-radius:50%;border:1.5px solid var(--surface);"></span>
+      </button>
+      <div class="avatar-placeholder" style="width:34px;height:34px;font-size:12px;cursor:pointer;">AK</div>
+    </div>
+  </div>
+
+  <div class="page-content">
+
+    <!-- COMPLETION ALERT -->
+    <div class="alert alert-warning" style="margin-bottom:24px;">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="flex-shrink:0;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <span>Profil complété à <strong>72%</strong>. <a href="profil.html" style="color:var(--primary-l);text-decoration:underline;">Complète ton profil</a> pour augmenter ton Kazi Score™.</span>
+    </div>
+
+    <!-- TOP STATS -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:24px;">
+      <div class="stat-card">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+          <span style="font-size:12px;color:var(--text-muted);font-weight:500;text-transform:uppercase;letter-spacing:.04em;">Vues du profil</span>
+          <div style="width:30px;height:30px;border-radius:8px;background:rgba(124,58,237,.15);display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" fill="none" stroke="#a78bfa" stroke-width="2" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
+        </div>
+        <div style="font-size:28px;font-weight:800;">142</div>
+        <div style="font-size:12px;color:#10b981;margin-top:4px;">↑ +23 cette semaine</div>
+      </div>
+      <div class="stat-card">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+          <span style="font-size:12px;color:var(--text-muted);font-weight:500;text-transform:uppercase;letter-spacing:.04em;">Candidatures</span>
+          <div style="width:30px;height:30px;border-radius:8px;background:rgba(59,130,246,.15);display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" fill="none" stroke="#60a5fa" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+        </div>
+        <div style="font-size:28px;font-weight:800;">7</div>
+        <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">3 en attente de réponse</div>
+      </div>
+      <div class="stat-card">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+          <span style="font-size:12px;color:var(--text-muted);font-weight:500;text-transform:uppercase;letter-spacing:.04em;">PMEs intéressées</span>
+          <div style="width:30px;height:30px;border-radius:8px;background:rgba(16,185,129,.15);display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" fill="none" stroke="#34d399" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg></div>
+        </div>
+        <div style="font-size:28px;font-weight:800;">4</div>
+        <div style="font-size:12px;color:#10b981;margin-top:4px;">1 nouvel intérêt aujourd'hui</div>
+      </div>
+      <div class="stat-card" style="background:linear-gradient(135deg,rgba(124,58,237,.15) 0%,rgba(59,130,246,.08) 100%);border-color:rgba(124,58,237,.3);">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+          <span style="font-size:12px;color:var(--primary-l);font-weight:500;text-transform:uppercase;letter-spacing:.04em;">Kazi Score™</span>
+          <span class="badge badge-gold">🥇 Gold</span>
+        </div>
+        <div style="font-size:36px;font-weight:900;color:var(--primary-l);">87<span style="font-size:16px;color:var(--text-muted);">/100</span></div>
+        <div style="margin-top:8px;"><div class="progress-bar"><div class="progress-fill" style="width:87%;"></div></div></div>
+      </div>
+    </div>
+
+    <!-- GRID: Score + Offres recommandées -->
+    <div style="display:grid;grid-template-columns:340px 1fr;gap:20px;margin-bottom:20px;">
+
+      <!-- Kazi Score détail -->
+      <div class="stat-card">
+        <div style="font-weight:700;margin-bottom:16px;font-size:15px;">Kazi Score™ — Détail</div>
+        <div style="display:flex;justify-content:center;margin-bottom:20px;" id="score-ring-div"></div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:4px;height:28px;background:var(--primary);border-radius:2px;"></div>
+            <div style="flex:1;">
+              <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;"><span>Formation</span><span style="font-weight:600;">17/20</span></div>
+              <div class="progress-bar" style="height:4px;"><div class="progress-fill" style="width:85%;"></div></div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:4px;height:28px;background:#60a5fa;border-radius:2px;"></div>
+            <div style="flex:1;">
+              <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;"><span>Tests techniques</span><span style="font-weight:600;">26/30</span></div>
+              <div class="progress-bar" style="height:4px;"><div class="progress-fill" style="width:87%;background:var(--gradient);"></div></div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:4px;height:28px;background:#34d399;border-radius:2px;"></div>
+            <div style="flex:1;">
+              <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;"><span>Portfolio</span><span style="font-weight:600;">14/20</span></div>
+              <div class="progress-bar" style="height:4px;"><div class="progress-fill" style="width:70%;background:var(--gradient-g);"></div></div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:4px;height:28px;background:#fbbf24;border-radius:2px;"></div>
+            <div style="flex:1;">
+              <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;"><span>Recommandations</span><span style="font-weight:600;">12/15</span></div>
+              <div class="progress-bar" style="height:4px;"><div class="progress-fill" style="width:80%;background:linear-gradient(90deg,#f59e0b,#fbbf24);"></div></div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:4px;height:28px;background:#fb7185;border-radius:2px;"></div>
+            <div style="flex:1;">
+              <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;"><span>Expérience + profil</span><span style="font-weight:600;">18/15</span></div>
+              <div class="progress-bar" style="height:4px;"><div class="progress-fill" style="width:73%;background:linear-gradient(90deg,#f43f5e,#fb7185);"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Offres recommandées -->
+      <div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+          <h3 style="font-size:15px;font-weight:700;">Offres recommandées pour toi</h3>
+          <a href="recherche.html" class="btn btn-ghost btn-sm">Voir tout →</a>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <!-- Offre 1 -->
+          <div class="candidate-card" style="cursor:default;">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
+              <div style="display:flex;gap:14px;align-items:flex-start;">
+                <div style="width:44px;height:44px;border-radius:10px;background:rgba(124,58,237,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:800;font-size:16px;color:#a78bfa;">TS</div>
+                <div>
+                  <div style="font-weight:700;margin-bottom:3px;">Comptable junior</div>
+                  <div style="font-size:13px;color:var(--text-muted);margin-bottom:8px;">Tech Solutions SARL · Kinshasa, Gombe</div>
+                  <div style="display:flex;flex-wrap:wrap;gap:6px;"><span class="skill-tag">Comptabilité</span><span class="skill-tag">Excel</span><span class="skill-tag">OHADA</span></div>
+                </div>
+              </div>
+              <div style="text-align:right;flex-shrink:0;">
+                <span class="badge badge-success" style="margin-bottom:6px;white-space:nowrap;">Match 94%</span>
+                <div style="font-size:12px;color:var(--text-muted);">$300–400/mois</div>
+              </div>
+            </div>
+            <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border);display:flex;gap:10px;">
+              <button class="btn btn-gradient btn-sm">Postuler</button>
+              <button class="btn btn-outline btn-sm">Voir l'offre</button>
+              <span style="margin-left:auto;font-size:12px;color:var(--text-muted);align-self:center;">Il y a 2h</span>
+            </div>
+          </div>
+          <!-- Offre 2 -->
+          <div class="candidate-card" style="cursor:default;">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
+              <div style="display:flex;gap:14px;align-items:flex-start;">
+                <div style="width:44px;height:44px;border-radius:10px;background:rgba(59,130,246,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:800;font-size:16px;color:#60a5fa;">AF</div>
+                <div>
+                  <div style="font-weight:700;margin-bottom:3px;">Assistant de direction</div>
+                  <div style="font-size:13px;color:var(--text-muted);margin-bottom:8px;">Alpha Finance · Kinshasa, Lingwala</div>
+                  <div style="display:flex;flex-wrap:wrap;gap:6px;"><span class="skill-tag">Gestion</span><span class="skill-tag">MS Office</span><span class="skill-tag">Communication</span></div>
+                </div>
+              </div>
+              <div style="text-align:right;flex-shrink:0;">
+                <span class="badge badge-success" style="margin-bottom:6px;white-space:nowrap;">Match 88%</span>
+                <div style="font-size:12px;color:var(--text-muted);">$250–350/mois</div>
+              </div>
+            </div>
+            <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border);display:flex;gap:10px;">
+              <button class="btn btn-gradient btn-sm">Postuler</button>
+              <button class="btn btn-outline btn-sm">Voir l'offre</button>
+              <span style="margin-left:auto;font-size:12px;color:var(--text-muted);align-self:center;">Il y a 5h</span>
+            </div>
+          </div>
+          <!-- Offre 3 -->
+          <div class="candidate-card" style="cursor:default;">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
+              <div style="display:flex;gap:14px;align-items:flex-start;">
+                <div style="width:44px;height:44px;border-radius:10px;background:rgba(16,185,129,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:800;font-size:16px;color:#34d399;">KL</div>
+                <div>
+                  <div style="font-weight:700;margin-bottom:3px;">Chargé de marketing digital</div>
+                  <div style="font-size:13px;color:var(--text-muted);margin-bottom:8px;">Kongo Logistics · Kinshasa, Kalamu</div>
+                  <div style="display:flex;flex-wrap:wrap;gap:6px;"><span class="skill-tag">Marketing</span><span class="skill-tag">Réseaux sociaux</span><span class="skill-tag">Canva</span></div>
+                </div>
+              </div>
+              <div style="text-align:right;flex-shrink:0;">
+                <span class="badge badge-pending" style="margin-bottom:6px;white-space:nowrap;">Match 79%</span>
+                <div style="font-size:12px;color:var(--text-muted);">$200–280/mois</div>
+              </div>
+            </div>
+            <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border);display:flex;gap:10px;">
+              <button class="btn btn-gradient btn-sm">Postuler</button>
+              <button class="btn btn-outline btn-sm">Voir l'offre</button>
+              <span style="margin-left:auto;font-size:12px;color:var(--text-muted);align-self:center;">Hier</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOTTOM GRID: Badges + Messages -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+      <!-- Badges -->
+      <div class="stat-card">
+        <div style="font-weight:700;margin-bottom:16px;font-size:15px;">Mes badges</div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div style="display:flex;align-items:center;gap:14px;padding:12px;background:rgba(205,127,50,.07);border:1px solid rgba(205,127,50,.15);border-radius:10px;">
+            <div style="font-size:24px;">🥉</div>
+            <div><div style="font-weight:600;font-size:14px;color:#cd7f32;">Algorithmique — Bronze</div><div style="font-size:12px;color:var(--text-muted);">Test passé le 12 juin 2026</div></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:14px;padding:12px;background:rgba(255,215,0,.07);border:1px solid rgba(255,215,0,.15);border-radius:10px;">
+            <div style="font-size:24px;">🥇</div>
+            <div><div style="font-weight:600;font-size:14px;color:#fbbf24;">Excel / Google Sheets — Gold</div><div style="font-size:12px;color:var(--text-muted);">Test passé le 18 juin 2026</div></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:14px;padding:12px;background:rgba(192,192,192,.07);border:1px solid rgba(192,192,192,.15);border-radius:10px;">
+            <div style="font-size:24px;">🥈</div>
+            <div><div style="font-weight:600;font-size:14px;color:#d4d4d8;">Comptabilité OHADA — Silver</div><div style="font-size:12px;color:var(--text-muted);">Test passé le 25 juin 2026</div></div>
+          </div>
+          <button class="btn btn-outline" style="width:100%;justify-content:center;margin-top:4px;">Passer un nouveau test</button>
+        </div>
+      </div>
+      <!-- Messages récents -->
+      <div class="stat-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+          <div style="font-weight:700;font-size:15px;">Messages récents</div>
+          <span style="background:var(--danger);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:999px;">2 nouveaux</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:2px;">
+          <div style="display:flex;gap:12px;padding:12px;border-radius:10px;background:rgba(124,58,237,.07);cursor:pointer;border:1px solid rgba(124,58,237,.15);">
+            <div class="avatar-placeholder" style="width:38px;height:38px;font-size:12px;flex-shrink:0;">TS</div>
+            <div style="flex:1;min-width:0;">
+              <div style="display:flex;justify-content:space-between;margin-bottom:3px;"><span style="font-weight:600;font-size:13px;">Tech Solutions SARL</span><span style="font-size:11px;color:var(--text-muted);">10h</span></div>
+              <div style="font-size:13px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Bonjour ! Nous avons regardé votre profil et...</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:12px;padding:12px;border-radius:10px;background:rgba(59,130,246,.06);cursor:pointer;border:1px solid rgba(59,130,246,.12);">
+            <div class="avatar-placeholder" style="width:38px;height:38px;font-size:12px;flex-shrink:0;background:linear-gradient(135deg,#3b82f6,#06b6d4);">AF</div>
+            <div style="flex:1;min-width:0;">
+              <div style="display:flex;justify-content:space-between;margin-bottom:3px;"><span style="font-weight:600;font-size:13px;">Alpha Finance</span><span style="font-size:11px;color:var(--text-muted);">Hier</span></div>
+              <div style="font-size:13px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Merci pour votre candidature ! Nous souhaiterions...</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:12px;padding:12px;border-radius:10px;cursor:pointer;">
+            <div class="avatar-placeholder" style="width:38px;height:38px;font-size:12px;flex-shrink:0;background:linear-gradient(135deg,#10b981,#059669);">KL</div>
+            <div style="flex:1;min-width:0;">
+              <div style="display:flex;justify-content:space-between;margin-bottom:3px;"><span style="font-weight:600;font-size:13px;">Kongo Logistics</span><span style="font-size:11px;color:var(--text-muted);">Lundi</span></div>
+              <div style="font-size:13px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Votre dossier a été transmis à notre DG pour...</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- end page-content -->
+</div><!-- end main-content -->
+</div><!-- end x-data -->
+
+<script src="assets/js/app.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const el = document.getElementById('score-ring-div');
+  if (el) renderScoreRing(el, 87, 130, 11);
+});
+</script>
+</body>
+</html>
